@@ -1,6 +1,6 @@
-package org.jetbrains.plugins.template.services
+package com.github.gamachec.yaml2env.services
 
-import org.jetbrains.plugins.template.MyBundle
+import com.github.gamachec.yaml2env.MyBundle
 
 class MyApplicationService {
 
