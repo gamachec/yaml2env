@@ -2,6 +2,6 @@
 
 # yaml2env Changelog
 
-## [Unreleased]
+## [1.0.0] - 2022-09-10
 ### Added
-- Initial scaffold created from [IntelliJ Platform Plugin Template](https://github.com/JetBrains/intellij-platform-plugin-template)
+- Plugin creation

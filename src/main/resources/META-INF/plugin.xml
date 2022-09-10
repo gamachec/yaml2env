@@ -13,7 +13,18 @@
     <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
-    <description>Add a 'Convert to Envfile' on context menu</description>
+    <description>
+        <![CDATA[
+        <p>Adds a context menu to transform a Yaml property file into a key=value list that can be used with the Docker command line or a Kubernetes configmap.</p>
+        <p><a href="https://github.com/gamachec/yaml2env">https://github.com/gamachec/yaml2env</a></p>
+        <p>Yaml converter use Spring Boot relaxing binding to transform the keys :</p>
+        <ul>
+            <li>Replace dots (.) with underscores (_)</li>
+            <li>Remove any dashes (-)</li>
+            <li>Convert to uppercase</li>
+        </ul>
+        ]]>
+    </description>
 
     <!-- Product and plugin compatibility requirements.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
@@ -23,6 +34,8 @@
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
 
+        <notificationGroup id="Yaml2env Notifications"
+                           displayType="BALLOON"/>
     </extensions>
 
     <actions>
