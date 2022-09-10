@@ -15,6 +15,34 @@
 </ul>
 <!-- Plugin description end -->
 
+## Usage
+
+Use this plugin to create an envfile from a Spring Boot property file. You can then adapt the content, and use it to test your Docker images locally or using a Kubernetes configmap.
+
+<ul>
+<li>Select your application(-profile).yaml</li>
+<li>Click on 'Convert Yaml to Env' menu</li>
+<li>Paste the content and adapt values to your needs</li>
+<li>Save the file or use values on IntelliJ IDEA runner environment option</li>
+</ul>
+
+Usage example with docker :
+<pre>
+docker run --env-file /path/to/myenv.txt <image>
+</pre>
+
+Usage example with docker-compose :
+<pre>
+docker compose --env-file /path/to/myenv.txt up
+</pre>
+
+Usage example with k8s configmap :
+<pre>
+kubectl create configmap my-config-map --from-env-file=/path/to/myenv.txt
+</pre>
+
+
+
 ## Installation
 
 - Using IDE built-in plugin system:
