@@ -1,11 +1,13 @@
 package com.sfeir.yaml2env.reader;
 
+import com.sfeir.yaml2env.exception.Yaml2EnvException;
 import org.apache.tools.ant.filters.StringInputStream;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowableOfType;
 
 public class YamlReaderTest {
 
@@ -17,7 +19,7 @@ public class YamlReaderTest {
                 """;
 
         // WHEN
-        var env = YamlReader.toEnv(new StringInputStream(yaml));
+        var env = YamlReader.convertToEnvList(new StringInputStream(yaml));
 
         // THEN
         var expectedEnv = List.of("URL=http://www.google.fr");
@@ -34,7 +36,7 @@ public class YamlReaderTest {
                 """;
 
         // WHEN
-        var env = YamlReader.toEnv(new StringInputStream(yaml));
+        var env = YamlReader.convertToEnvList(new StringInputStream(yaml));
 
         // THEN
         var expectedEnv = List.of("URL_GOOGLE=http://www.google.fr", "URL2_GOOGLE=http://www.google.fr");
@@ -52,7 +54,7 @@ public class YamlReaderTest {
                 """;
 
         // WHEN
-        var env = YamlReader.toEnv(new StringInputStream(yaml));
+        var env = YamlReader.convertToEnvList(new StringInputStream(yaml));
 
         // THEN
         var expectedEnv = List.of("URL_GOOGLE_0=http://www.google.fr", "URL_GOOGLE_1=http://www.google.com");
@@ -69,7 +71,7 @@ public class YamlReaderTest {
                   """;
 
         // WHEN
-        var env = YamlReader.toEnv(new StringInputStream(yaml));
+        var env = YamlReader.convertToEnvList(new StringInputStream(yaml));
 
         // THEN
         var expectedEnv = List.of("BLA_GOOGLE_0_URL=http://www.google.fr", "BLA_GOOGLE_1_URL=http://www.google.com");
@@ -84,7 +86,7 @@ public class YamlReaderTest {
                   """;
 
         // WHEN
-        var env = YamlReader.toEnv(new StringInputStream(yaml));
+        var env = YamlReader.convertToEnvList(new StringInputStream(yaml));
 
         // THEN
         var expectedEnv = List.of("SPACED=\"bla bla bla\"");
@@ -99,11 +101,26 @@ public class YamlReaderTest {
                   """;
 
         // WHEN
-        var env = YamlReader.toEnv(new StringInputStream(yaml));
+        var env = YamlReader.convertToEnvList(new StringInputStream(yaml));
 
         // THEN
         var expectedEnv = List.of("DASHEDKEY=bla");
         assertThat(env).containsExactlyInAnyOrderElementsOf(expectedEnv);
     }
 
+    @Test
+    void should_throw_exception_when_yaml_structure_is_invalid() {
+        // GIVEN
+        var yaml = """
+                this is an invalid yaml structure :)
+                  """;
+
+        // WHEN
+        var exception = catchThrowableOfType(() -> YamlReader.convertToEnvList(new StringInputStream(yaml)), Yaml2EnvException.class);
+
+        // THEN
+        assertThat(exception)
+                .isNotNull()
+                .hasMessage("Yaml file structure is invalid.");
+    }
 }

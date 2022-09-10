@@ -1,5 +1,6 @@
 package com.sfeir.yaml2env.reader;
 
+import com.sfeir.yaml2env.exception.Yaml2EnvException;
 import org.jetbrains.annotations.NotNull;
 import org.yaml.snakeyaml.Yaml;
 
@@ -11,12 +12,18 @@ import static java.lang.String.format;
 
 public class YamlReader {
 
-    public static List<String> toEnv(InputStream yamlInputStream) {
+    public static List<String> convertToEnvList(InputStream yamlInputStream) {
         var yamlMap = readYaml(yamlInputStream);
 
         return MapFlattener.flatten(yamlMap)
-                .map(entry -> format("%s=%s", relaxedBootBinding(entry.getKey()), formatEnvValue(entry.getValue())))
+                .map(YamlReader::convertPropertyToEnv)
                 .toList();
+    }
+
+    private static String convertPropertyToEnv(Map.Entry<String, String> entry) {
+        var key = relaxedBootBinding(entry.getKey());
+        var value = formatEnvValue(entry.getValue());
+        return format("%s=%s", key, value);
     }
 
     /**
@@ -34,13 +41,17 @@ public class YamlReader {
                 .replace(".", "_");
     }
 
-    private static String formatEnvValue(String rawValue) {
+    private static String formatEnvValue(@NotNull String rawValue) {
         return rawValue.contains(" ") ? format("\"%s\"", rawValue) : rawValue;
     }
 
-    private static Map<String, Object> readYaml(InputStream inputStream) {
-        var yaml = new Yaml();
-        return yaml.load(inputStream);
+    private static Map<String, Object> readYaml(@NotNull InputStream inputStream) {
+        try {
+            var yaml = new Yaml();
+            return yaml.load(inputStream);
+        } catch (Exception exception) {
+            throw new Yaml2EnvException("Yaml file structure is invalid.", exception);
+        }
     }
 
 }
