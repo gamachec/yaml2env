@@ -5,10 +5,8 @@ fun properties(key: String) = project.findProperty(key).toString()
 plugins {
     // Java support
     id("java")
-    // Kotlin support
-    id("org.jetbrains.kotlin.jvm") version "1.7.10"
     // Gradle IntelliJ Plugin
-    id("org.jetbrains.intellij") version "1.8.0"
+    id("org.jetbrains.intellij") version "1.9.0"
     // Gradle Changelog Plugin
     id("org.jetbrains.changelog") version "1.3.1"
     // Gradle Qodana Plugin
@@ -24,10 +22,14 @@ repositories {
 }
 
 // Set the JVM language level used to compile sources and generate files - Java 11 is required since 2020.3
-kotlin {
-    jvmToolchain {
-        languageVersion.set(JavaLanguageVersion.of(11))
-    }
+dependencies {
+    implementation("org.yaml:snakeyaml:1.31")
+
+    testImplementation("org.assertj:assertj-core:3.23.1")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.0")
+
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.0")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.9.0")
 }
 
 // Configure Gradle IntelliJ Plugin - read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
@@ -55,6 +57,12 @@ qodana {
 }
 
 tasks {
+    // Set the JVM compatibility versions
+    withType<JavaCompile> {
+        sourceCompatibility = "17"
+        targetCompatibility = "17"
+    }
+
     wrapper {
         gradleVersion = properties("gradleVersion")
     }
@@ -92,6 +100,10 @@ tasks {
         systemProperty("ide.mac.message.dialogs.as.sheets", "false")
         systemProperty("jb.privacy.policy.text", "<!--999.999-->")
         systemProperty("jb.consents.confirmation.enabled", "false")
+    }
+
+    test {
+        useJUnitPlatform()
     }
 
     signPlugin {

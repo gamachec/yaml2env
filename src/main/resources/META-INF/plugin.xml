@@ -1,18 +1,36 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>com.github.gamachec.yaml2env</id>
-    <name>yaml2env</name>
-    <vendor>gamachec</vendor>
+    <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
+    <id>com.sfeir.yaml2env</id>
 
+    <!-- Public plugin name should be written in Title Case.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
+    <name>Yaml2env</name>
+
+    <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
+    <vendor email="gamache.c@sfeir.com" url="https://www.sfeir.com">Claude Gamache</vendor>
+
+    <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
+         Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
+    <description>Add a 'Convert to Envfile' on context menu</description>
+
+    <!-- Product and plugin compatibility requirements.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
     <depends>com.intellij.modules.platform</depends>
 
+    <!-- Extension points defined by the plugin.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="com.github.gamachec.yaml2env.services.MyApplicationService"/>
-        <projectService serviceImplementation="com.github.gamachec.yaml2env.services.MyProjectService"/>
+
     </extensions>
 
-    <applicationListeners>
-        <listener class="com.github.gamachec.yaml2env.listeners.MyProjectManagerListener"
-                  topic="com.intellij.openapi.project.ProjectManagerListener"/>
-    </applicationListeners>
+    <actions>
+        <action id="yaml2env"
+                class="com.sfeir.yaml2env.Yaml2EnvAction"
+                text="Convert Yaml to Env"
+                description="Convert Yaml to Env (clipboard)">
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
+        </action>
+    </actions>
 </idea-plugin>
