@@ -44,6 +44,26 @@ public class YamlReaderTest {
     }
 
     @Test
+    void should_return_complete_keys_when_read_nested_objects() {
+        // GIVEN
+        var yaml = """
+                    server.port: 9090
+                    spring:
+                      data:
+                        mongodb:
+                          host: mongoserver
+                          port: 27017
+                """;
+
+        // WHEN
+        var env = YamlReader.convertToEnvList(new StringInputStream(yaml));
+
+        // THEN
+        var expectedEnv = List.of("SERVER_PORT=9090", "SPRING_DATA_MONGODB_HOST=mongoserver", "SPRING_DATA_MONGODB_PORT=27017");
+        assertThat(env).containsExactlyInAnyOrderElementsOf(expectedEnv);
+    }
+
+    @Test
     void should_return_indexed_keys_when_read_string_list() {
         // GIVEN
         var yaml = """

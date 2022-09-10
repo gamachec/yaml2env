@@ -23,6 +23,7 @@
             <li>Remove any dashes (-)</li>
             <li>Convert to uppercase</li>
         </ul>
+        <p>The result is copied to the clipboard.</p>
         ]]>
     </description>
 
