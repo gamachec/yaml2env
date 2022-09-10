@@ -1,8 +1,8 @@
 # Yaml2env IntelliJ Platform Plugin
 
 ![Build](https://github.com/gamachec/yaml2env/workflows/Build/badge.svg)
-[![Version](https://img.shields.io/jetbrains/plugin/v/PLUGIN_ID.svg)](https://plugins.jetbrains.com/plugin/PLUGIN_ID)
-[![Downloads](https://img.shields.io/jetbrains/plugin/d/PLUGIN_ID.svg)](https://plugins.jetbrains.com/plugin/PLUGIN_ID)
+[![Version](https://img.shields.io/jetbrains/plugin/v/19905.svg)](https://plugins.jetbrains.com/plugin/19905)
+[![Downloads](https://img.shields.io/jetbrains/plugin/d/19905.svg)](https://plugins.jetbrains.com/plugin/19905)
 
 <!-- Plugin description -->
 <p>Adds a context menu to transform a Yaml property file into a key=value list that can be used with the Docker command line or a Kubernetes configmap.</p>
