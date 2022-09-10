@@ -3,6 +3,8 @@
 # yaml2env Changelog
 
 ## [Unreleased]
+
+## [1.0.1]
 ### Changed
 - Fix nested object parsing
 
