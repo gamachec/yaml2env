@@ -3,6 +3,8 @@
 # yaml2env Changelog
 
 ## [Unreleased]
+### Changed
+- Update plugin icon & documentation
 
 ## [1.0.1]
 ### Changed
