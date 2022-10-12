@@ -23,7 +23,7 @@ repositories {
 
 // Set the JVM language level used to compile sources and generate files - Java 11 is required since 2020.3
 dependencies {
-    implementation("org.yaml:snakeyaml:1.31")
+    implementation("org.yaml:snakeyaml:1.33")
 
     testImplementation("org.assertj:assertj-core:3.23.1")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.1")
